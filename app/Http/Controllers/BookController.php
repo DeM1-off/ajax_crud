@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $search =  $request->input('search');
@@ -30,43 +26,45 @@ class BookController extends Controller
         return View('book.index')->with('books',$book);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        return view('book.create');
+        $authors= AuthorModel::all();
+        return view('book.create', compact('authors'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-
         $request->validate([
             'name' => 'required',
-            'descriptions' => 'required',
-
+            'image' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:2048'
         ]);
+        $books= new BookModel();
 
-        BookModel::create($request->all());
+        $books->name =   $request->input('name');
+        $books->author_id =   $request->input('author_id');
+        if ($request->hasFile('image')){
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = uniqid(). '.'. $extension;
+            $file->move('upload/',$filename);
+            $books->image = $filename;
+        }
+        else
+        {
+            $books->image = '';
+        }
 
-        return redirect()->route('book.index')
-            ->with('success', 'Book created successfully.');
+
+        $books->save();
+
+
+            return redirect()->route('book.index')
+                ->with('success', 'Book created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
 
@@ -74,31 +72,20 @@ class BookController extends Controller
         return view('book.show', compact('books'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
+        $authors= AuthorModel::all();
         $books = BookModel::find($id);
-        return view('book.edit', compact('books'));
+        return view('book.edit', compact('books','authors'));
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request,BookModel $books)
     {
         $request->validate([
-            'name' => 'required',
-            'descriptions' => 'required',
+            'name' => 'required'
 
         ]);
         $books->update($request->all());
@@ -107,16 +94,13 @@ class BookController extends Controller
             ->with('success', 'Book updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $books = BookModel::findOrFail($id);
         $books->delete();
+        $image_path = "upload/".$books->image;
+        unlink($image_path);
 
         return redirect()->route('book.index')
             ->with('success', 'Book deleted successfully');

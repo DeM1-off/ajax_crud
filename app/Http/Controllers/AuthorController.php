@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthorRequest;
 use App\Models\AuthorModel;
-use Illuminate\Http\Request;
-use Response;
-use Illuminate\Support\Facades\DB;
+
+
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+
+
+    public function index(AuthorRequest $request)
     {
 
         $search =  $request->input('search');
@@ -33,30 +30,16 @@ class AuthorController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('author.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(AuthorRequest $request)
     {
 
-        $request->validate([
-            'name' => 'required',
-            'surname' => 'required',
-
-        ]);
 
         AuthorModel::create($request->all());
 
@@ -64,12 +47,7 @@ class AuthorController extends Controller
             ->with('success', 'Authors created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
 
@@ -77,12 +55,7 @@ class AuthorController extends Controller
         return view('author.show', compact('authors'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $authors = AuthorModel::find($id);
@@ -90,32 +63,15 @@ class AuthorController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,AuthorModel $authors)
+    public function update(AuthorRequest $request,AuthorModel $authors)
     {
-        $request->validate([
-            'name' => 'required',
-            'descriptions' => 'required',
 
-        ]);
         $authors->update($request->all());
 
         return redirect()->route('author.index')
             ->with('success', 'Book updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $authors = AuthorModel::findOrFail($id);

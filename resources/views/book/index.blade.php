@@ -52,7 +52,7 @@
                        </td>
                 @endif
                 @if($book->image != null)
-                    <img src="{{ asset('upload/image').'/'.$book->image}}" style="width: 100px;height: 100px" alt=""></td>
+                    <img src="{{ asset('upload/').'/'.$book->image}}" style="width: 100px;height: 100px" alt=""></td>
                 @endif
 
                 <td>

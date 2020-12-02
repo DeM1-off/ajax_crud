@@ -21,6 +21,6 @@ class BookModel extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name', 'descriptions'
+        'name', 'image','author_id'
     ];
 }
