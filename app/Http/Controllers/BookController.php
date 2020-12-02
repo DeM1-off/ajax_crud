@@ -13,13 +13,21 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $books = BookModel::orderBy('name')->paginate(15);;
-
-         return view('book.index', compact('books'))
-        ->with('i', (request()->input('page', 1) - 1) * 5);
+        $search =  $request->input('search');
+        if($search!=""){
+            $book = BookModel::where(function ($query) use ($search){
+                $query->orderBy('name', 'desc');
+                $query->where('name', 'like', '%'.$search.'%');
+            })
+                ->paginate(2);
+            $book->appends(['q' => $search]);
+        }
+        else{
+            $book = BookModel::paginate(2);
+        }
+        return View('book.index')->with('books',$book);
     }
 
     /**

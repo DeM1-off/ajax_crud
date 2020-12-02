@@ -49,13 +49,6 @@
             <li>
                 <a class="nav-link" href="{{ route('author.index') }}">Author</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link"href="{{ route('search') }}">Search book</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"href="{{ route('search_author') }}">Search author</a>
-            </li>
-
 
         </ul>
     </div>

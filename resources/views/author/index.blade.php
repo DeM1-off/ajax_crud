@@ -20,7 +20,17 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-
+    <form method="GET" action="{{ url('author') }}">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control" placeholder="Search">
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+    <br/>
     <table class="table table-bordered table-responsive-lg table-hover">
         <thead class="thead-dark">
         <tr>
@@ -31,7 +41,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach ($authors as $author)
+        @foreach($authors as $author)
             <tr>
                 <td scope="row">{{ $author->author_id}}</td>
                 <td>{{ $author->name }}</td>
@@ -58,13 +68,13 @@
                     </form>
                 </td>
             </tr>
+
         @endforeach
+
+
         </tbody>
     </table>
-
-    {!! $authors->links() !!}
-
-
+    {{ $authors->links() }}
     <!-- small modal -->
     <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModalLabel"
          aria-hidden="true">
@@ -131,7 +141,6 @@
                 timeout: 8000
             })
         });
-
         // display a modal (medium modal)
         $(document).on('click', '#mediumButton', function(event) {
             event.preventDefault();
@@ -157,6 +166,5 @@
                 timeout: 8000
             })
         });
-
     </script>
 @endsection

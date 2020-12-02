@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AuthorModel;
 use Illuminate\Http\Request;
 use Response;
+use Illuminate\Support\Facades\DB;
 
 class AuthorController extends Controller
 {
@@ -13,13 +14,23 @@ class AuthorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $authors  = AuthorModel::orderBy('name')->paginate(15);;
+        $search =  $request->input('search');
+        if($search!=""){
+            $author = AuthorModel::where(function ($query) use ($search){
+                $query->orderBy('name', 'desc');
+                $query->where('name', 'like', '%'.$search.'%');
+            })
+                ->paginate(2);
+            $author->appends(['q' => $search]);
+        }
+        else{
+            $author = AuthorModel::orderBy('name')->paginate(5);
+        }
+        return View('author.index')->with('authors',$author);
 
-        return view('author.index', compact('authors'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -112,5 +123,17 @@ class AuthorController extends Controller
 
         return redirect()->route('author.index')
             ->with('success', 'Book deleted successfully');
+    }
+
+    public function search($id) {
+
+        $authors = AuthorModel::find($id);
+
+        if (empty($article)) {
+            abort(404);
+        }
+
+        return view('author.index', compact('authors'));
+
     }
 }

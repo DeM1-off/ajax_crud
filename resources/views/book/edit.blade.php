@@ -35,8 +35,8 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Surname:</strong>
-                <input type="text" name="surname" value="{{ $books->descriptions }}" class="form-control" placeholder="surname">
+                <strong>image:</strong>
+
             </div>
         </div>
 

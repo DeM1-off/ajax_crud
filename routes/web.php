@@ -18,17 +18,11 @@ use  App\Http\Controllers\AuthorSearch;
 */
 
 Route::get('/', function () {
-    return view('layout');
+    return view('layouts.app');
 });
 
 Route::resource('book',BookController::class);
 
 Route::resource('author',AuthorController::class);
 
-
-
-Route::get('search',[LiveSearch::class, 'index'])->name('search');
-Route::get('search/action', [LiveSearch::class, 'action'])->name('search.action');
-Route::get('search_author',[AuthorSearch::class, 'index'])->name('search_author');
-Route::get('search_author/action', [AuthorSearch::class, 'action'])->name('search_author.action');
 

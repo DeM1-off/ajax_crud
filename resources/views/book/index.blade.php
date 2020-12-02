@@ -20,13 +20,23 @@
             <p>{{ $message }}</p>
         </div>
     @endif
+    <form method="GET" action="{{ url('book') }}">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control" placeholder="Search">
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+    <br/>
 
     <table class="table table-bordered table-responsive-lg table-hover">
         <thead class="thead-dark">
         <tr>
             <th scope="col">No</th>
             <th scope="col">Name</th>
-            <th scope="col" width="30%">Surname</th>
             <th>Image</th>
             <th scope="col">Action</th>
         </tr>
@@ -36,7 +46,6 @@
             <tr>
                 <td scope="row">{{ $book->book_id}}</td>
                 <td>{{ $book->name }}</td>
-                <td>{{ $book->descriptions }}</td>
                 <td>
 
                     @if($book->image== null)

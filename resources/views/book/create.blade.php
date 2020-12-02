@@ -32,12 +32,6 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>descriptions:</strong>
-                <input type="text" name="descriptions" class="form-control" placeholder="descriptions">
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
                 <strong>Image:</strong>
                 <input type="file" name="image" class="form-control" placeholder="image">
             </div>
