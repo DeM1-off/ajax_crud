@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="container box">
-        <h3 align="center">Live search Author</h3><br />
+        <h3 align="center">Live search Book</h3><br />
         <div class="panel panel-default">
             <div class="panel-heading">Search Customer Data</div>
             <div class="panel-body">

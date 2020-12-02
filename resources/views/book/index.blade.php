@@ -27,6 +27,7 @@
             <th scope="col">No</th>
             <th scope="col">Name</th>
             <th scope="col" width="30%">Surname</th>
+            <th>Image</th>
             <th scope="col">Action</th>
         </tr>
         </thead>
@@ -36,6 +37,14 @@
                 <td scope="row">{{ $book->book_id}}</td>
                 <td>{{ $book->name }}</td>
                 <td>{{ $book->descriptions }}</td>
+                <td>
+
+                    @if($book->image== null)
+                       </td>
+                @endif
+                @if($book->image != null)
+                    <img src="{{ asset('upload/image').'/'.$book->image}}" style="width: 100px;height: 100px" alt=""></td>
+                @endif
 
                 <td>
                     <form action="{{ route('book.destroy', $book->book_id) }}" method="POST">
