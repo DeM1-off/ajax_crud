@@ -12,32 +12,43 @@ class AuthorController extends Controller
 {
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index(Request $request)
     {
 
         $search =  $request->input('search');
         if($search!=""){
-            $author = AuthorModel::where(function ($query) use ($search){
+            $authors = AuthorModel::where(function ($query) use ($search){
                 $query->orderBy('name', 'desc');
                 $query->where('name', 'like', '%'.$search.'%');
-            })->paginate(2);
-            $author->appends(['q' => $search]);
+            })->paginate(15);
+            $authors->appends(['q' => $search]);
         }
         else{
-            $author = AuthorModel::orderBy('name')->paginate(5);
+            $authors = AuthorModel::orderBy('name')->paginate(15);
         }
 
-        return View('author.index')->with('authors',$author);
+        return View('author.index',compact('authors'));
 
     }
 
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create()
     {
         return view('author.create');
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
 
@@ -49,6 +60,10 @@ class AuthorController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show($id)
     {
 
@@ -57,6 +72,10 @@ class AuthorController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function edit($id)
     {
         $authors = AuthorModel::find($id);
@@ -64,7 +83,12 @@ class AuthorController extends Controller
 
     }
 
-    public function update(AuthorRequest $request,  $id)
+    /**
+     * @param AuthorRequest $request
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update(AuthorRequest $request, $id)
     {
 
         AuthorModel::find($id)->fill($request->all())->save();
@@ -73,11 +97,13 @@ class AuthorController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
-        $authors = AuthorModel::findOrFail($id);
-        $authors->delete();
-
+        $authors = AuthorModel::findOrFail($id)->delete();
         return redirect()->route('author.index')
             ->with('success', 'Book deleted successfully');
     }

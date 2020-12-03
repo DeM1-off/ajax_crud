@@ -42,6 +42,7 @@ class CreateBooksAuthorTable extends Migration
         $table->dropForeign('book_id');
         $table->dropForeign('author_id');
     });
+
         Schema::dropIfExists('books_author');
     }
 }
