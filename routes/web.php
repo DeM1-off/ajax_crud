@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\LiveSearch;
-use  App\Http\Controllers\AuthorSearch;
+use App\Http\Controllers\AuthorToBook;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,8 +21,10 @@ Route::get('/', function () {
     return view('layouts.app');
 });
 
-Route::resource('book',BookController::class);
 
+Route::resource('book',BookController::class);
+Route::resource('book',BookController::class);
+Route::resource('attribute',AuthorToBook::class);
 Route::resource('author',AuthorController::class);
 
 

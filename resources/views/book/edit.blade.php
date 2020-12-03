@@ -27,15 +27,7 @@
     @method('PUT')
 
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <select name="author_id" id="author_id" style="width: 100%">
-                    @foreach($authors as $author)
-                        <option value="{{$author->author_id}}">{{$author->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
+
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Name:</strong>

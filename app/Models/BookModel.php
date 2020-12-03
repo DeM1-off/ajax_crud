@@ -21,6 +21,12 @@ class BookModel extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name', 'image','author_id'
+        'name', 'image'
     ];
+
+
+    public function addAuthor()
+    {
+        return $this->belongsToMany(AuthorModel::class,'books_to_autor');
+    }
 }

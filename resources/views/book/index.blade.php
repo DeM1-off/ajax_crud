@@ -11,6 +11,9 @@
                 <a class="btn btn-success text-light" data-toggle="modal" id="mediumButton" data-target="#mediumModal"
                    data-attr="{{ route('book.create') }}" title="Create a project"> <i class="fas fa-plus-circle"></i>
                 </a>
+                <a class="btn btn-success text-light" data-toggle="modal" id="mediumButton" data-target="#mediumModal"
+                   data-attr="{{ route('attribute.create') }}" title="Create a project"> Create Author
+                </a>
             </div>
         </div>
     </div>

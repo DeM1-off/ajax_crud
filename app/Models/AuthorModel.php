@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
 
 class AuthorModel extends Model
@@ -12,7 +12,7 @@ class AuthorModel extends Model
     /**
      * @var string
      */
-    protected $table = 'authorS';
+    protected $table = 'authors';
 
     /**
      * @var string
@@ -22,7 +22,13 @@ class AuthorModel extends Model
     /**
      * @var string[]
      */
-    protected $fillable = [
-        'name', 'surname'
-    ];
+    protected $fillable = ['name', 'surname'];
+
+    public function addBook()
+    {
+
+        return $this->belongsToMany(BookModel::class,'books_to_autor');
+
+    }
+
 }

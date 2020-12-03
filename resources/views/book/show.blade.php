@@ -24,6 +24,16 @@
 
         </div>
     </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Authors:</strong>
+            <ul>
+            @foreach ($attributes as $attribute)
+                    <p>{{ $attribute->name }}</p>
+            @endforeach
+                </ul>
+        </div>
+    </div>
 
 
 </div>

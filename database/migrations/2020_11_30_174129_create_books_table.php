@@ -17,7 +17,6 @@ class CreateBooksTable extends Migration
             $table->id('book_id');
             $table->string('name');
             $table->mediumText('image')->nullable();
-            $table->bigInteger('author_id');
             $table->timestamps();
         });
     }
